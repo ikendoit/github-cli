@@ -19,5 +19,14 @@ git-issues prs -r <repo> -o <owner name>
 
 ```
 export USER_GITHUB=<my github user>
-export USER_CRED=<my github oauth2 token>
+export CRED_GITHUB=<my github oauth2 token>
+```
+
+## tips: 
+
+pipe your result to `less` to conviniently see the issues and prs
+
+```
+git-issues issues -s open  | less
+git-issues prs -r <repo> -o <owner name> | less
 ```
