@@ -1,4 +1,4 @@
-# GITHUB-CLI-ISSUES
+# :rocket: GITHUB-CLI-ISSUES 
 
 First, let us procrastinate: https://youtu.be/KXOu09r43nw
 
