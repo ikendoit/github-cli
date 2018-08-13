@@ -1,4 +1,4 @@
-# :rocket: GITHUB-CLI-ISSUES 
+## :rocket: GITHUB-CLI
 
 First, let us procrastinate: https://youtu.be/KXOu09r43nw
 
@@ -6,7 +6,7 @@ What's going on in my github repo ?
 
 I am using cli, but too lazy to check github issues and prs in the browser, what should I do ? 
 
-## Quick Start
+### Quick Start
 
 ```
 git clone https://github.com/ikendoit/github-cli
@@ -17,14 +17,14 @@ github-cli issues -s open
 github-cli prs -r <repo> -o <owner name>
 ```
 
-## environment variables to set: 
+### environment variables to set: 
 
 ```
 export USER_GITHUB=<my github user>
 export CRED_GITHUB=<my github oauth2 token>
 ```
 
-## tips: 
+### tips: 
 
 pipe your result to `less` to conviniently see the issues and prs
 
