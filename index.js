@@ -18,15 +18,15 @@ program
 .option('-o, --owner <owner>', 'the owner of the repository to check')
 .action( async () => {
 
-	let state;
+	let state, repo, owner;
 
 	try { 
 		switch (program.args[0].toUpperCase()) {
 
 			case 'PRS':
 				state = program.state || 'open'
-				let repo 	= program.repo || null
-				let owner = program.owner || null
+				repo 	= program.repo || null
+				owner = program.owner || null
 				if (!repo || !owner) return "please specify owner + repo"
 				await prQueries.repoPullRequest({ 
 					repo, 
@@ -39,11 +39,14 @@ program
 			case 'ISSUES': 
 
 				state = program.state || 'open'
+				repo 	= program.repo || null
+				owner = program.owner || null
 				await issueQueries.repoIssue({
-					repo: 'repo', 
+					repo, 
 					user, 
 					cred, 
-					state
+					state,
+					owner,
 				})
 				break;
 
