@@ -1,6 +1,6 @@
 ## :rocket: GITHUB-CLI
 
-First, let us procrastinate: https://youtu.be/KXOu09r43nw
+First, let us procrastinate: https://www.youtube.com/watch?v=KXOu09r43nw
 
 What's going on in my github repo ? 
 
