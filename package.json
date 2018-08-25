@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "show github PRs, Issues",
   "main": "index.js",
-	"bin": {
-		"github-cli": "./index.js"
-	},
+  "bin": {
+    "github-cli": "./index.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
