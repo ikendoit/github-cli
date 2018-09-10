@@ -1,31 +1,37 @@
 const fetch = require('node-fetch')
+const names = require('../libs/Repo')
 
 const repoIssue = async ({repo, user, cred, state, owner}) => {
 
 	let result, response;
 
-	if (repo && owner) {
-
-		result = await fetch(`https://api.github.com/repos/${owner}/${repo}/issues?state=${state}`, {
-			headers: {
-				Authorization: `token ${cred}`
-			},
-			method: 'GET', 
-		})
-
-		response = await result.json()
-
-	} else {
-
-		result = await fetch(`https://api.github.com/user/issues?state=${state}`, {
-			headers: {
-				Authorization: `token ${cred}`
-			},
-			method: 'GET', 
-		})
-
-		response = await result.json()
+	if (!owner || !repo) {
+		owner = names.ownerName
+		repo  = names.repoName
 	}
+	//if (repo && owner) {
+
+	result = await fetch(`https://api.github.com/repos/${owner}/${repo}/issues?state=${state}`, {
+		headers: {
+			Authorization: `token ${cred}`
+		},
+		method: 'GET', 
+	})
+
+	response = await result.json()
+
+	// to check for all issues in all repos assigned to me
+	//} else {
+
+	//	result = await fetch(`https://api.github.com/user/issues?state=${state}`, {
+	//		headers: {
+	//			Authorization: `token ${cred}`
+	//		},
+	//		method: 'GET', 
+	//	})
+
+	//	response = await result.json()
+	//}
 
   if (response.length === 0 || !response[0] || !response[0].url) {
     console.log('no issues')

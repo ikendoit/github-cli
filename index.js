@@ -27,7 +27,6 @@ program
 				state = program.state || 'open'
 				repo 	= program.repo || null
 				owner = program.owner || null
-				if (!repo || !owner) return "please specify owner + repo"
 				await prQueries.repoPullRequest({ 
 					repo, 
 					user, 

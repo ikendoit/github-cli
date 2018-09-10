@@ -1,3 +1,12 @@
-const { spawn }       = require('child_process');
+const { spawnSync }       = require('child_process');
 
-spawn('cat package.json | grep \'\"name\"\' | sed -E \'s/\"name\": \"(.*)\",/\1/g\' | sed -E \'s/(\t| )//g\'', null, { stdio: 'inherit' });
+const owner   = spawnSync('git remote -v show | grep -Eo "github.*push" | cut -d"/" -f2', [], { shell: true });
+const repo    = spawnSync('git remote -v show | grep -Eo "github.*push" | cut -d"/" -f3', [], { shell: true });
+const ownerName = owner.output.toString().match(/\,(.+)/)[1]
+const repoName = repo.output.toString().match(/\,(.+) /)[1]
+
+module.exports = {
+	ownerName,
+	repoName
+}
+
