@@ -7,3 +7,7 @@ oh my god, did you see clumsy 3 new short
 it so rachet I think Im gonna puke 
 no im fine, im so rachet 
 lets go get some shot. 
+
+ugg, this table does have any vodka, you know any one else ? 
+that so rachet 
+lemme take a 
