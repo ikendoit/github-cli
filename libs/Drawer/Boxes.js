@@ -6,8 +6,9 @@ const drawBoxesByLine = ({ dataArray, boxWidth, boxHeight, numBox, padding }) =>
 
   // header
   for (let i = 0 ; i < numBox ; i++){
-    drawLine(padding,' ')
-    drawLine(boxWidth,'-');	
+		if (!dataArray[i]) continue
+    printMulti(padding,' ')
+		printMulti(boxWidth+2, '-')
   }
 
   print('\n')
@@ -15,41 +16,29 @@ const drawBoxesByLine = ({ dataArray, boxWidth, boxHeight, numBox, padding }) =>
   // draw '|' when i===padding-1
   for (let row = 0 ; row < boxHeight ; row++){
 
-    const lineWidth  = boxWidth*(numBox)
 
-    for (let i = 0 ; i < lineWidth + padding*numBox ; i++){
-
-      const boxNum     =   Math.floor( i / ( boxWidth+padding ) )
-      const atRowEnd   =   i === padding-1
-      const atRowStart = ( ( i ) % (boxWidth) === 0 ) || ( (i+padding) % (boxWidth+padding) === 0 )
-      let   dataDraw   =   dataArray[boxNum] || ''
-      const columnPadd = ( ( i-padding ) % boxWidth === 0 ) ||
-                         ( ( i+padding ) % boxWidth === 0 ) 
-      if ( atRowStart && i !== 0)  {
-        print('|')
-        print(' ')
-        i++
-      } else {
-        if ( dataDraw[0] && (i >= padding || columnPadd) ) {
-          print(dataDraw[0])
-          dataArray[boxNum] = dataArray[boxNum].slice(1)
-        } else {
-          print(' ')
-        }
-      }
-    }
-
+		for (let i = 0 ; i < numBox; i++) {
+			printMulti(padding, ' ')
+			print('|')
+			// draw content 
+			if (!dataArray[i]) {
+				printMulti(boxWidth, ' ')
+			}	else {
+				const lengthSpace = boxWidth-dataArray[i].length
+				for (let chrIndex = 0; chrIndex < boxWidth ; chrIndex++){
+					print(dataArray[i][0] || '')
+					dataArray[i] = dataArray[i].slice(1)
+				}
+				printMulti(lengthSpace,' ')
+			}
+			print('|')
+		}
     print('\n')
 
   }
 
-  // footer
-  for (let i = 0 ; i < numBox ; i++){
-    drawLine(padding,' ')
-    drawLine(boxWidth,'-');	
-  }
-
   print('\n')
+	print('\n')
 
 }
 
@@ -68,7 +57,7 @@ const drawBoxes = ({ dataArray, ...config }) => {
   const boxWidth      = config.BOX_WIDTH
   const boxHeight     = Math.ceil(maxLength/boxWidth)
   const padding       = config.PADDING_LEFT
-  const numBoxPerLine = Math.floor(screenWidth/(boxWidth+padding))
+  const numBoxPerLine = Math.floor(screenWidth/(boxWidth+padding+4))
 
   for (let i = 0 ; i < dataArray.length; i+=numBoxPerLine ){
     let numBox = numBoxPerLine
@@ -87,7 +76,7 @@ const print             = (chr) =>{
 	process.stdout.write(`${chr}`)
 }
 
-const drawLine          = (width,chr) => {
+const printMulti          = (width,chr) => {
 	for (let i = 0 ; i < width ; i++){
 		print(chr)
 	}
