@@ -9,54 +9,48 @@ const cred            = process.env.CRED_GITHUB
 if (!user || !cred) return "please export environment variables"
 
 program
-.command('<resource>', 'the resource to choose: "prs"|"issues"')
+	.command('<resource>', 'the resource to choose: "prs"|"issues"')
+	.description('fetch Issues and PRs')
+	.option('-s, --state <state>', 'the state to check: "open"|"closed"|"all"|"ALL"')
+	.option('-r, --repo <repo>', 'the repository to check')
+	.option('-o, --owner <owner>', 'the owner of the repository to check')
+	.parse(process.argv)
 
-.description('fetch Issues and PRs')
+let state, repo, owner;
 
-.option('-s, --state <state>', 'the state to check: "open"|"closed"|"all"|"ALL"')
-.option('-r, --repo <repo>', 'the repository to check')
-.option('-o, --owner <owner>', 'the owner of the repository to check')
-.action( async () => {
+try { 
+	switch (program.args[0].toUpperCase()) {
 
-	let state, repo, owner;
+		case 'PRS':
+			state = program.state || 'open'
+			repo 	= program.repo || null
+			owner = program.owner || null
+			prQueries.repoPullRequest({ 
+				repo, 
+				user, 
+				cred, 
+				owner,
+				state,
+			});
+			break;
+		case 'ISSUES': 
 
-	try { 
-		switch (program.args[0].toUpperCase()) {
+			state = program.state || 'open'
+			repo 	= program.repo || null
+			owner = program.owner || null
+			issueQueries.repoIssue({
+				repo, 
+				user, 
+				cred, 
+				state,
+				owner,
+			})
+			break;
 
-			case 'PRS':
-				state = program.state || 'open'
-				repo 	= program.repo || null
-				owner = program.owner || null
-				await prQueries.repoPullRequest({ 
-					repo, 
-					user, 
-					cred, 
-					owner,
-					state,
-				});
-				break;
-			case 'ISSUES': 
-
-				state = program.state || 'open'
-				repo 	= program.repo || null
-				owner = program.owner || null
-				await issueQueries.repoIssue({
-					repo, 
-					user, 
-					cred, 
-					state,
-					owner,
-				})
-				break;
-
-			default:
-				console.log('invalid command');
-		}
-  } catch(err) {
-		console.log('woops, error, please contact me or check the log')
-		console.log(err.message)
+		default:
+			console.log('invalid command');
 	}
-
-
-})
-.parse(process.argv);
+} catch(err) {
+	console.log('woops, error, please contact me or check the log')
+	console.log(err.message)
+}
