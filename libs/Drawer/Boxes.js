@@ -21,11 +21,11 @@ const drawBoxesByLine = ({ dataArray, boxWidth, boxHeight, numBox, padding }) =>
 
       const boxNum     =   Math.floor( i / ( boxWidth+padding ) )
       const atRowEnd   =   i === padding-1
-      const atRowStart = ( ( i - padding + 1) % (boxWidth) === 0 ) || ( i + padding % (boxWidth+padding) === 0 )
+      const atRowStart = ( ( i ) % (boxWidth) === 0 ) || ( (i+padding) % (boxWidth+padding) === 0 )
       let   dataDraw   =   dataArray[boxNum] || ''
       const columnPadd = ( ( i-padding ) % boxWidth === 0 ) ||
                          ( ( i+padding ) % boxWidth === 0 ) 
-      if ( atRowStart ||   {
+      if ( atRowStart && i !== 0)  {
         print('|')
         print(' ')
         i++
