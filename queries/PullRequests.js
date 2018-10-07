@@ -1,5 +1,7 @@
 const fetch = require('node-fetch')
 const names = require('../libs/Repo')
+const drawBoxes = require('../libs/Drawer/Boxes')
+const { CONFIG_BOX: config } = require('../config') 
 
 const repoPullRequest = async ({repo, user, cred, state, owner}) => {
 
@@ -31,23 +33,30 @@ const repoPullRequest = async ({repo, user, cred, state, owner}) => {
     return
 	}
 	
-  response
-    .forEach(pr => {
+	drawBoxes.drawBoxes({
+		dataArray: response.map(resRecord => `
 
-      const { url, user, title, body, updated_at, closed_at, requested_reviewers} = pr
-			requested_reviewers.forEach(view => console.log(view.login))
-      console.log("\n\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
-      console.log('from: ',url)
-      console.log('title: ',title)
-      console.log(`body: "${body}"`)
-      console.log('issuer: ',user.login)
-			console.log('requested reviewers: ')
-			requested_reviewers.forEach(view => console.log(view.login))
+			State: ${JSON.stringify(resRecord.state)}\n \
 
-      console.log('state: ',pr.state)
-      console.log('updated at: ',updated_at)      
-      console.log('closed at: ',closed_at)
-    });
+			Title: ${JSON.stringify(resRecord.title)}\n \
+
+			Creator: ${JSON.stringify(resRecord.user.login)}\n \
+
+			Label: ${JSON.stringify(resRecord.labels.map(label => label.name))}\n \
+
+			ID: ${JSON.stringify(resRecord.number)}\n \
+
+			Body: ${JSON.stringify(resRecord.body)}\n \
+
+			Updated at: ${JSON.stringify(resRecord.updated_at)}\n \
+
+			URL: ${JSON.stringify(resRecord.url)}\n \
+
+			Closed at: ${JSON.stringify(resRecord.closed_at)}\n \
+
+		`.replace(/(\t|\f|\r)/g,'')),
+		...config
+	})
 
   return
 

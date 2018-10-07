@@ -24,9 +24,15 @@ const drawBoxesByLine = ({ dataArray, boxWidth, boxHeight, numBox, padding }) =>
 			if (!dataArray[i]) {
 				printMulti(boxWidth, ' ')
 			}	else {
-				const lengthSpace = boxWidth-dataArray[i].length
+				let lengthSpace = boxWidth
 				for (let chrIndex = 0; chrIndex < boxWidth ; chrIndex++){
-					print(dataArray[i][0] || '')
+					if (['\n'].includes(dataArray[i][0])) {
+						dataArray[i] = dataArray[i].slice(1)
+						break;
+					} else {
+						lengthSpace--;
+						print(dataArray[i][0])
+					}
 					dataArray[i] = dataArray[i].slice(1)
 				}
 				printMulti(lengthSpace,' ')
@@ -49,13 +55,15 @@ const drawBoxes = ({ dataArray, ...config }) => {
   let COLUNN = -1;
   let NUM_BOX = 4;
   let maxLength = -1;
+	let maxNewLine = -1;
 
   dataArray.forEach( (str) => {
     maxLength = Math.max(str.length, maxLength)
+		maxNewLine = Math.max((str.match(/(\n|\t|\f|\r)/g) || []).length, maxNewLine)
   });
 
   const boxWidth      = config.BOX_WIDTH
-  const boxHeight     = Math.ceil(maxLength/boxWidth)
+  const boxHeight     = Math.ceil(maxLength/boxWidth) + maxNewLine
   const padding       = config.PADDING_LEFT
   const numBoxPerLine = Math.floor(screenWidth/(boxWidth+padding+4))
 
