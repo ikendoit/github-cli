@@ -1,9 +1,14 @@
 const fetch = require('node-fetch')
+const names = require('../libs/Repo')
 
 const repoPullRequest = async ({repo, user, cred, state, owner}) => {
 
   //TODO: auto get owner name of repo
 
+	if (!owner || !repo) {
+		owner = names.ownerName
+		repo  = names.repoName
+	}
 	let result = await fetch(`https://api.github.com/repos/${owner}/${repo}/pulls`, {
 		headers: {
 			Authorization: `token ${cred}`

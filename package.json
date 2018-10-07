@@ -4,7 +4,7 @@
   "description": "show github PRs, Issues",
   "main": "index.js",
   "bin": {
-    "github-cli": "./index.js"
+    "ghcli": "./index.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

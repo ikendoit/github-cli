@@ -13,8 +13,8 @@ git clone https://github.com/ikendoit/github-cli
 npm install 
 npm install -g 
 < set environment variables >
-github-cli issues -s open 
-github-cli prs -r <repo> -o <owner name>
+github-cli issues
+github-cli prs
 ```
 
 ### environment variables to set: 
